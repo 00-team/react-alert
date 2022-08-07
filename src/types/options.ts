@@ -1,4 +1,6 @@
-import { CSSProperties } from 'react'
+import { CSSProperties, Context } from 'react'
+
+import { AlertContextModel } from './alert'
 
 type PositionsString =
     | 'top left'
@@ -39,7 +41,8 @@ enum Transitions {
     SCALE = 'scale',
 }
 
-export { Positions, AlertTypes, Transitions }
+export { Positions, PositionsString }
+export { AlertTypes, AlertTypesString, Transitions }
 
 interface Options {
     position?: Positions | PositionsString
@@ -47,6 +50,7 @@ interface Options {
     transition?: Transitions | TransitionsString
     timeout?: number
     containerStyle?: CSSProperties
+    context?: Context<AlertContextModel>
 
     // offset: string,
 
