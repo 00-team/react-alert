@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 
 import './style.scss'
 
-import { Options, Positions, Provider, TemplateProps, useAlert } from '../lib'
+import { Options, Positions, Provider, TemplateProps, useAlert } from '../lib/'
 
 const BasicTemplate: FC<TemplateProps> = ({ message, id }) => {
     return (
@@ -22,7 +22,7 @@ const ProviderOpts: Options = {
     },
 }
 
-const App: FC = () => {
+const App: FC = ({}) => {
     const alert = useAlert()
 
     return (

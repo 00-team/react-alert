@@ -2,7 +2,7 @@ import TsPaths from 'tsconfig-paths-webpack-plugin'
 import { Configuration } from 'webpack'
 
 import Base from './base'
-import { SRC_DIR, LIB_DIR, resolve } from './config/path'
+import { LIB_DIR, resolve, SRC_DIR } from './config/path'
 import { BuildStyle } from './config/style'
 
 // plugins
@@ -16,7 +16,6 @@ const Config: Configuration = {
         path: LIB_DIR,
         clean: true,
         filename: 'index.js',
-        sourceMapFilename: 'source_maps/[file].map',
         library: {
             name: '@00-team/react-alert',
             type: 'umd',
