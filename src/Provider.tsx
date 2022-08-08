@@ -1,5 +1,9 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { TransitionGroup } from 'react-transition-group'
+
+import { AlertTransition, GetUniqueID, GroupByPos, Wrapper } from 'components'
+import { DefaultContext } from 'context'
 
 import {
     AlertContextModel,
@@ -9,15 +13,16 @@ import {
     Positions,
     ProviderProps,
     ShowFunc,
-} from '.'
-import { GetUniqueID } from 'components/utils'
-import { DefaultContext } from 'context'
+    Transitions,
+} from './types'
 
-const Provider: FC<ProviderProps> = ({ children, options = {} }) => {
+const Provider: FC<ProviderProps> = props => {
+    const { children, template: Template, options = {} } = props
     const { containerStyle = {}, timeout: BaseTimeOut = 0 } = options
     const { context: Context = DefaultContext } = options
     const { position: BasePosition = Positions.TOP_CENTER } = options
     const { type: BaseType = AlertTypes.INFO } = options
+    const { transition = Transitions.FADE, wrapper } = options
 
     const root = useRef<HTMLDivElement>()
     const ContextValue = useRef<AlertContextModel>()
@@ -26,7 +31,7 @@ const Provider: FC<ProviderProps> = ({ children, options = {} }) => {
 
     useEffect(() => {
         root.current = document.createElement('div')
-        root.current.id = '__react-alert__'
+        root.current.id = '__00_react_alert__'
         document.body.appendChild(root.current)
 
         return () => {
@@ -136,7 +141,34 @@ const Provider: FC<ProviderProps> = ({ children, options = {} }) => {
     return (
         <Context.Provider value={ContextValue.current}>
             {children}
-            <TransitionGroup appear style={containerStyle}></TransitionGroup>
+
+            {root.current &&
+                createPortal(
+                    GroupByPos(alerts).map(
+                        ({ position, alerts: Galerts }, idx0) => {
+                            console.log(alerts)
+                            return (
+                                <TransitionGroup
+                                    {...wrapper}
+                                    appear
+                                    key={idx0}
+                                    component={Wrapper}
+                                    {...{ position, containerStyle }}
+                                >
+                                    {Galerts.map((alert, idx1) => (
+                                        <AlertTransition
+                                            key={idx1}
+                                            type={transition}
+                                        >
+                                            <Template {...alert} />
+                                        </AlertTransition>
+                                    ))}
+                                </TransitionGroup>
+                            )
+                        }
+                    ),
+                    root.current
+                )}
         </Context.Provider>
     )
 }
