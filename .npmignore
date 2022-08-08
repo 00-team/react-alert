@@ -4,5 +4,4 @@ src
 demo
 tsconfig.json
 webpack
-.babelrc
 package-lock.json
