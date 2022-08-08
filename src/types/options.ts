@@ -1,6 +1,6 @@
-import { CSSProperties, Context } from 'react'
+import { CSSProperties, HTMLAttributes } from 'react'
 
-import { AlertContextModel } from './alert'
+import { AlertContext } from './alert'
 
 type PositionsString =
     | 'top left'
@@ -33,8 +33,6 @@ enum AlertTypes {
     ERROR = 'error',
 }
 
-export {}
-
 type TransitionsString = 'fade' | 'scale'
 enum Transitions {
     FADE = 'fade',
@@ -42,7 +40,9 @@ enum Transitions {
 }
 
 export { Positions, PositionsString }
-export { AlertTypes, AlertTypesString, Transitions }
+export { AlertTypes, AlertTypesString }
+export { Transitions, TransitionsString }
+export { Options }
 
 interface Options {
     position?: Positions | PositionsString
@@ -50,19 +50,6 @@ interface Options {
     transition?: Transitions | TransitionsString
     timeout?: number
     containerStyle?: CSSProperties
-    context?: Context<AlertContextModel>
-
-    // offset: string,
-
-    // template: PropTypes.oneOfType([
-    // PropTypes.element,
-    // PropTypes.func,
-    // PropTypes.elementType
-    // ]).isRequired,
-    // context: PropTypes.shape({
-    // Provider: PropTypes.object,
-    // Consumer: PropTypes.object
-    // })
+    context?: AlertContext
+    wrapper?: HTMLAttributes<HTMLDivElement>
 }
-
-export { Options }

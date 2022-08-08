@@ -1,7 +1,11 @@
-import { ReactNode } from 'react'
+import { Context, ReactNode } from 'react'
 
-import { Positions, PositionsString } from './options'
-import { AlertTypes, AlertTypesString } from './options'
+import {
+    AlertTypes,
+    AlertTypesString,
+    Positions,
+    PositionsString,
+} from './options'
 
 type AT = AlertTypes | AlertTypesString
 interface ReturnOptions<T extends AT = AT> {
@@ -35,6 +39,8 @@ type Show = (msg: ReactNode, options?: BaseOptions) => Alert
 type Func = (msg: ReactNode, options?: OmitedOptions) => Alert
 
 export { Show as ShowFunc, Func as AlertFunc }
+export { Alert as AlertModel }
+export { AlertContext, AlertContextModel }
 
 interface AlertContextModel {
     alerts: Alert[]
@@ -46,4 +52,4 @@ interface AlertContextModel {
     error: Func
 }
 
-export { AlertContextModel, Alert as AlertModel }
+type AlertContext = Context<AlertContextModel>
