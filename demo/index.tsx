@@ -3,20 +3,52 @@ import { createRoot } from 'react-dom/client'
 
 import './style.scss'
 
-import { Provider } from '../lib'
+import { Options, Positions, Provider, TemplateProps, useAlert } from '../lib'
+
+const BasicTemplate: FC<TemplateProps> = ({ message, id }) => {
+    return (
+        <div style={{ color: '#fff', margin: '10px' }}>
+            BasicTemplate {message} - {id}
+        </div>
+    )
+}
+
+const ProviderOpts: Options = {
+    position: Positions.TOP_RIGHT,
+    // transition: 'fade',
+    timeout: 5e3,
+    wrapper: {
+        className: 'Wrapper',
+    },
+}
 
 const App: FC = () => {
+    const alert = useAlert()
+
     return (
         <StrictMode>
             <div className='app'>
                 APP
-                <Provider options={{ position: 'bottom center' }}>
-                    <span>GG EZ</span>
-                </Provider>
+                <button
+                    onClick={() => {
+                        // console.log(alert)
+                        alert.success('GG EZ Alert')
+                    }}
+                >
+                    Show Alert
+                </button>
             </div>
         </StrictMode>
     )
 }
 
+const Root: FC = () => (
+    <StrictMode>
+        <Provider options={ProviderOpts} template={BasicTemplate}>
+            <App />
+        </Provider>
+    </StrictMode>
+)
+
 const root = createRoot(document.getElementById('root')!)
-root.render(<App />)
+root.render(<Root />)
