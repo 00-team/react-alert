@@ -25,7 +25,6 @@ interface Alert<T extends AT = AT> {
 }
 
 interface BaseOptions {
-    type?: AlertTypes | AlertTypesString
     timeout?: number
     position?: Positions | PositionsString
     onOpen?: () => void
@@ -33,10 +32,12 @@ interface BaseOptions {
     [K: string]: unknown
 }
 
-type OmitedOptions = Omit<BaseOptions, 'type'>
+interface ShowOptions extends BaseOptions {
+    type?: AlertTypes | AlertTypesString
+}
 
-type Show = (msg: ReactNode, options?: BaseOptions) => Alert
-type Func = (msg: ReactNode, options?: OmitedOptions) => Alert
+type Show = (msg: ReactNode, options?: ShowOptions) => Alert
+type Func = (msg: ReactNode, options?: BaseOptions) => Alert
 
 export { Show as ShowFunc, Func as AlertFunc }
 export { Alert as AlertModel }
