@@ -17,6 +17,7 @@ const DefaultStyles: CSSProperties = {
     flexDirection: 'column',
     width: '100%',
     pointerEvents: 'none',
+    zIndex: 1000,
 }
 
 type PS = Record<PositionsString, CSSProperties>
