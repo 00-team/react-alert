@@ -59,11 +59,10 @@ const PosStyles: PS = {
 interface WrapperProps extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode[]
     position: PositionsString
-    containerStyle: CSSProperties
 }
 
 const Wrapper: FC<WrapperProps> = props => {
-    const { children, position, containerStyle, ...attrs } = props
+    const { children, position, ...attrs } = props
     const PosStyle = useMemo(() => PosStyles[position], [position])
 
     if (children.length < 1) return <></>
@@ -71,7 +70,7 @@ const Wrapper: FC<WrapperProps> = props => {
     const style = {
         ...DefaultStyles,
         ...PosStyle,
-        ...containerStyle,
+        ...attrs.style,
     }
 
     return (

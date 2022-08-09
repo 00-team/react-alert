@@ -1,4 +1,4 @@
-import { CSSProperties, HTMLAttributes } from 'react'
+import { HTMLAttributes } from 'react'
 
 import { AlertContext } from './alert'
 
@@ -49,7 +49,6 @@ interface Options {
     type?: AlertTypes | AlertTypesString
     transition?: Transitions | TransitionsString
     timeout?: number
-    containerStyle?: CSSProperties
     context?: AlertContext
     wrapper?: HTMLAttributes<HTMLDivElement>
 }

@@ -18,11 +18,12 @@ import {
 
 const Provider: FC<ProviderProps> = props => {
     const { children, template: Template, options = {} } = props
-    const { containerStyle = {}, timeout: BaseTimeOut = 0 } = options
+
+    const { timeout: BaseTimeOut = 0, wrapper } = options
     const { context: Context = DefaultContext } = options
     const { position: BasePosition = Positions.TOP_CENTER } = options
     const { type: BaseType = AlertTypes.INFO } = options
-    const { transition = Transitions.FADE, wrapper } = options
+    const { transition = Transitions.FADE } = options
 
     const root = useRef<HTMLDivElement>()
     const ContextValue = useRef<AlertContextModel>()
@@ -152,7 +153,7 @@ const Provider: FC<ProviderProps> = props => {
                                     appear
                                     key={idx0}
                                     component={Wrapper}
-                                    {...{ position, containerStyle }}
+                                    position={position}
                                 >
                                     {Galerts.map((alert, idx1) => (
                                         <AlertTransition
