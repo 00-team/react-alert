@@ -27,7 +27,6 @@ const transitionStyles: TransStyle = {
     [Transitions.FADE]: {
         entering: { opacity: 0 },
         entered: { opacity: 1 },
-        exited: { opacity: 1 },
     },
     [Transitions.SCALE]: {
         entering: { transform: 'scale(0)' },
@@ -37,11 +36,12 @@ const transitionStyles: TransStyle = {
     },
 }
 
-const AlertTransition: FC<AlertTransitionProps> = ({ children, type }) => {
+const AlertTransition: FC<AlertTransitionProps> = props => {
+    const { children, type, ...attrs } = props
     const ref = useRef<HTMLDivElement>(null)
 
     return (
-        <Transition nodeRef={ref} timeout={duration}>
+        <Transition nodeRef={ref} timeout={duration} {...attrs}>
             {state => (
                 <div
                     ref={ref}
@@ -50,7 +50,7 @@ const AlertTransition: FC<AlertTransitionProps> = ({ children, type }) => {
                         ...transitionStyles[type][state],
                     }}
                 >
-                    {state} - {children}
+                    {children}
                 </div>
             )}
         </Transition>

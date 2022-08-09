@@ -1,29 +1,20 @@
-import { AlertModel, PositionsString } from '../../types'
+import { AlertModel, Positions, PositionsString } from '../../types'
 
-interface PosGroup {
-    position: PositionsString
-    alerts: AlertModel[]
-}
+// type PosGroupObj = { [pos in PositionsString]: AlertModel[] }
+type PosGroupObj = Record<PositionsString, AlertModel[]>
 
-type PosGroupObj = { [pos in PositionsString]?: AlertModel[] }
-
-type TGP = (alerts: AlertModel[]) => PosGroup[]
+type TGP = (alerts: AlertModel[]) => PosGroupObj
 const GroupByPos: TGP = alerts => {
-    let groups: PosGroupObj = {}
+    let groups: PosGroupObj = {} as PosGroupObj
+
+    Object.values(Positions).forEach(pos => (groups[pos] = []))
 
     alerts.forEach(alert => {
         const pos = alert.options.position
-        if (groups[pos]) {
-            groups[pos]?.push(alert)
-        } else {
-            groups[pos] = [alert]
-        }
+        groups[pos].push(alert)
     })
 
-    return Object.entries(groups).map(([key, value]) => ({
-        position: key as PositionsString,
-        alerts: value,
-    }))
+    return groups
 }
 
 export { GroupByPos }

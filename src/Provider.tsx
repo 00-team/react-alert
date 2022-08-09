@@ -144,9 +144,8 @@ const Provider: FC<ProviderProps> = props => {
 
             {root.current &&
                 createPortal(
-                    GroupByPos(alerts).map(
-                        ({ position, alerts: Galerts }, idx0) => {
-                            console.log(alerts)
+                    Object.entries(GroupByPos(alerts)).map(
+                        ([position, Galerts], idx0) => {
                             return (
                                 <TransitionGroup
                                     {...wrapper}
