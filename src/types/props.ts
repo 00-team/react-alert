@@ -3,14 +3,12 @@ import { Component, FC, ReactNode } from 'react'
 import { AlertModel } from './alert'
 import { Options, Transitions, TransitionsString } from './options'
 
-// import {}
-
 interface TemplateProps extends AlertModel {}
 
 interface ProviderProps {
     children?: ReactNode
     options?: Options
-    template: FC<TemplateProps> | typeof Component<TemplateProps | {}>
+    template: FC<AlertModel> | typeof Component
 }
 
 interface AlertTransitionProps {
