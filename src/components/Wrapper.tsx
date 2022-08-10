@@ -31,7 +31,7 @@ const PosStyles: PS = {
         top: '50%',
         alignItems: 'flex-start',
     },
-    [Positions.MIDDLE]: {
+    [Positions.MIDDLE_CENTER]: {
         top: '50%',
     },
     [Positions.MIDDLE_RIGHT]: {
