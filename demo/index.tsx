@@ -16,10 +16,8 @@ const BasicTemplate: FC<TemplateProps> = ({ message, id }) => {
 const ProviderOpts: Options = {
     position: Positions.TOP_RIGHT,
     // transition: 'fade',
-    timeout: 5e3,
-    wrapper: {
-        className: 'Wrapper',
-    },
+    // timeout: 5e3,
+    wrapper: pos => ({ className: `GGEZ-${pos}` }),
 }
 
 const App: FC = ({}) => {
@@ -36,6 +34,13 @@ const App: FC = ({}) => {
                     }}
                 >
                     Show Alert
+                </button>
+                <button
+                    onClick={() =>
+                        alert.info('GG LEFT', { position: Positions.TOP_LEFT })
+                    }
+                >
+                    Show on Left
                 </button>
             </div>
         </StrictMode>
