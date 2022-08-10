@@ -7,6 +7,9 @@ const duration = 250
 
 type DefStyle = Record<Transitions, CSSProperties>
 
+type TransitionStatusStyle = Partial<Record<TransitionStatus, CSSProperties>>
+type TransitionStyle = Record<Transitions, TransitionStatusStyle>
+
 const defaultStyle: DefStyle = {
     [Transitions.FADE]: {
         transition: `opacity ${duration}ms ease`,
@@ -18,12 +21,7 @@ const defaultStyle: DefStyle = {
     },
 }
 
-type TransStyle = Record<
-    Transitions,
-    Partial<Record<TransitionStatus, CSSProperties>>
->
-
-const transitionStyles: TransStyle = {
+const transitionStyles: TransitionStyle = {
     [Transitions.FADE]: {
         entering: { opacity: 0 },
         entered: { opacity: 1 },
@@ -37,22 +35,32 @@ const transitionStyles: TransStyle = {
 }
 
 const AlertTransition: FC<AlertTransitionProps> = props => {
-    const { children, type, ...attrs } = props
+    const { children, type, get_attrs, ...opts } = props
     const ref = useRef<HTMLDivElement>(null)
 
+    const GetAttrs = (status: TransitionStatus) => {
+        if (get_attrs) return get_attrs(type, status)
+        return {}
+    }
+
     return (
-        <Transition nodeRef={ref} timeout={duration} {...attrs}>
-            {state => (
-                <div
-                    ref={ref}
-                    style={{
-                        ...defaultStyle[type],
-                        ...transitionStyles[type][state],
-                    }}
-                >
-                    {children}
-                </div>
-            )}
+        <Transition nodeRef={ref} timeout={duration} {...opts}>
+            {status => {
+                const { style, ...attrs } = GetAttrs(status)
+                return (
+                    <div
+                        {...attrs}
+                        ref={ref}
+                        style={{
+                            ...defaultStyle[type],
+                            ...transitionStyles[type][status],
+                            ...style,
+                        }}
+                    >
+                        {children}
+                    </div>
+                )
+            }}
         </Transition>
     )
 }

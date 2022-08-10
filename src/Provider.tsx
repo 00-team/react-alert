@@ -23,7 +23,7 @@ const Provider: FC<ProviderProps> = props => {
     const { context: Context = DefaultContext } = options
     const { position: BasePosition = Positions.TOP_CENTER } = options
     const { type: BaseType = AlertTypes.INFO } = options
-    const { transition = Transitions.FADE } = options
+    const { transition = Transitions.FADE, inner } = options
 
     const root = useRef<HTMLDivElement>()
     const ContextValue = useRef<AlertContextModel>()
@@ -149,14 +149,15 @@ const Provider: FC<ProviderProps> = props => {
                         ([position, Galerts], idx0) => {
                             return (
                                 <TransitionGroup
-                                    {...wrapper}
                                     appear
                                     key={idx0}
                                     component={Wrapper}
                                     position={position}
+                                    get_attrs={wrapper}
                                 >
                                     {Galerts.map((alert, idx1) => (
                                         <AlertTransition
+                                            get_attrs={inner}
                                             key={idx1}
                                             type={transition}
                                         >

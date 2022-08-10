@@ -1,7 +1,14 @@
 import { Component, FC, ReactNode } from 'react'
 
 import { AlertModel } from './alert'
-import { Options, Transitions, TransitionsString } from './options'
+import {
+    InnerAttrs,
+    Options,
+    PositionsString,
+    Transitions,
+    TransitionsString,
+    WrapperAttrs,
+} from './options'
 
 interface TemplateProps extends AlertModel {}
 
@@ -14,6 +21,13 @@ interface ProviderProps {
 interface AlertTransitionProps {
     children?: ReactNode
     type: Transitions | TransitionsString
+    get_attrs?: InnerAttrs
 }
 
-export { ProviderProps, AlertTransitionProps, TemplateProps }
+interface WrapperProps {
+    children: ReactNode[]
+    position: PositionsString
+    get_attrs?: WrapperAttrs
+}
+
+export { ProviderProps, AlertTransitionProps, TemplateProps, WrapperProps }

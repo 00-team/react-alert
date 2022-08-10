@@ -1,4 +1,5 @@
 import { HTMLAttributes } from 'react'
+import { TransitionStatus } from 'react-transition-group'
 
 import { AlertContext } from './alert'
 
@@ -43,6 +44,13 @@ export { Positions, PositionsString }
 export { AlertTypes, AlertTypesString }
 export { Transitions, TransitionsString }
 export { Options }
+export { WrapperAttrs, InnerAttrs }
+
+type WrapperAttrs = (pos: PositionsString) => HTMLAttributes<HTMLDivElement>
+type InnerAttrs = (
+    trans: TransitionsString,
+    status: TransitionStatus
+) => HTMLAttributes<HTMLDivElement>
 
 interface Options {
     position?: Positions | PositionsString
@@ -50,5 +58,6 @@ interface Options {
     transition?: Transitions | TransitionsString
     timeout?: number
     context?: AlertContext
-    wrapper?: HTMLAttributes<HTMLDivElement>
+    wrapper?: WrapperAttrs
+    inner?: InnerAttrs
 }

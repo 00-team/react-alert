@@ -1,12 +1,6 @@
-import React, {
-    CSSProperties,
-    FC,
-    HTMLAttributes,
-    ReactNode,
-    useMemo,
-} from 'react'
+import React, { CSSProperties, FC, useMemo } from 'react'
 
-import { Positions, PositionsString } from '../types'
+import { Positions, PositionsString, WrapperProps } from '../types'
 
 const DefaultStyles: CSSProperties = {
     left: 0,
@@ -57,25 +51,23 @@ const PosStyles: PS = {
     },
 }
 
-interface WrapperProps extends HTMLAttributes<HTMLDivElement> {
-    children: ReactNode[]
-    position: PositionsString
-}
-
 const Wrapper: FC<WrapperProps> = props => {
-    const { children, position, ...attrs } = props
+    const { children, position, get_attrs } = props
     const PosStyle = useMemo(() => PosStyles[position], [position])
+    const opts = get_attrs ? get_attrs(position) : {}
+    const { style, ...attrs } = opts
 
     if (children.length < 1) return <></>
 
-    const style = {
-        ...DefaultStyles,
-        ...PosStyle,
-        ...attrs.style,
-    }
-
     return (
-        <div {...attrs} style={style}>
+        <div
+            {...attrs}
+            style={{
+                ...DefaultStyles,
+                ...PosStyle,
+                ...style,
+            }}
+        >
             {children}
         </div>
     )
